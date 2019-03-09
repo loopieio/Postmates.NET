@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28606.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{2B5CD401-16B9-4E37-813B-43CFF7FD6DFA}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5074CFB1-2C15-4F49-8C97-ED91B4FC9640}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postmates.Xunit", "Test\Postmates.Xunit\Postmates.Xunit.csproj", "{9FE295BA-CD47-44B7-9585-B097D2BC006B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Postmates.NET", "src\Postmates.NET\Postmates.NET.csproj", "{D96723E4-92EA-4B85-B7D5-AB0ED2033F1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Postmates.NET", "Test\Test.Postmates.NET\Test.Postmates.NET.csproj", "{27480022-5C42-4E8E-8BCB-E54D9464541D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FE295BA-CD47-44B7-9585-B097D2BC006B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE295BA-CD47-44B7-9585-B097D2BC006B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE295BA-CD47-44B7-9585-B097D2BC006B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE295BA-CD47-44B7-9585-B097D2BC006B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D96723E4-92EA-4B85-B7D5-AB0ED2033F1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D96723E4-92EA-4B85-B7D5-AB0ED2033F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D96723E4-92EA-4B85-B7D5-AB0ED2033F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D96723E4-92EA-4B85-B7D5-AB0ED2033F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27480022-5C42-4E8E-8BCB-E54D9464541D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27480022-5C42-4E8E-8BCB-E54D9464541D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27480022-5C42-4E8E-8BCB-E54D9464541D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27480022-5C42-4E8E-8BCB-E54D9464541D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9FE295BA-CD47-44B7-9585-B097D2BC006B} = {5074CFB1-2C15-4F49-8C97-ED91B4FC9640}
+		{27480022-5C42-4E8E-8BCB-E54D9464541D} = {5074CFB1-2C15-4F49-8C97-ED91B4FC9640}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DB2A3DE-024A-4F86-B18A-7BE1BC4A64F5}
+	EndGlobalSection
+EndGlobal

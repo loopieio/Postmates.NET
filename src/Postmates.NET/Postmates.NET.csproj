@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>A Postmates API client for .NET</Description>
+    <RepositoryUrl>https://github.com/LoopieLLC/Postmates.NET</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/LoopieLLC/Postmates.NET</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/LoopieLLC/Postmates.NET/blob/master/LICENSE</PackageLicenseUrl>
+    <AssemblyName>Postmates.NET</AssemblyName>
+    <PackageId>Postmates.NET</PackageId>
+    <Authors>Marcus Bowyer</Authors>
+    <Company>Loopie.io</Company>
+    <Product>Postmates.NET</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoJSON.Net" Version="1.1.72" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.2.0" />
+    <PackageReference Include="Neon.Common" Version="0.2.7-alpha" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+</Project>
