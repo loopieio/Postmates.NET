@@ -11,6 +11,8 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
+  POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
 
 steps:
 
