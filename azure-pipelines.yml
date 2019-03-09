@@ -13,9 +13,11 @@ variables:
   buildConfiguration: 'Release'
   POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
   POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
+  Major: '1'
+  Minor: '0'
+  Patch: '0'
 
 steps:
-
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
@@ -25,3 +27,21 @@ steps:
     command: test
     projects: '**/Test.*.csproj'
     arguments: '--configuration $(buildConfiguration)'
+
+- task: NuGetCommand@2
+  inputs:
+    command: pack
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)'
+
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    publishFeedCredentials: 'nuget'
+    versioningScheme: byPrereleaseNumber
+    majorVersion: '$(Major)'
+    minorVersion: '$(Minor)'
+    patchVersion: '$(Patch)'
