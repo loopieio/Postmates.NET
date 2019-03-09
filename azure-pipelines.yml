@@ -31,15 +31,19 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: pack
+    packagesToPack: 'src/Postmates.NET.csproj'
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
     patchVersion: '$(Patch)'
+    configuration: '$(BuildConfiguration)'
+    packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: NuGetCommand@2
   inputs:
     command: push
     nuGetFeedType: external
+    packagesToPush: $(Build.ArtifactStagingDirectory)/*.nupkg'
     publishFeedCredentials: 'nuget'
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
