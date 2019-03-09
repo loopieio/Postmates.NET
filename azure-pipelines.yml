@@ -31,7 +31,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: pack
-    packagesToPack: 'src/Postmates.NET.csproj'
+    packagesToPack: '**\*.csproj;-:**/Test.*.csproj'
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
