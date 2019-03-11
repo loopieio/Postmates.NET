@@ -26,12 +26,12 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
 
-- task: DotNetCoreCLI@2
-  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
-  inputs:
-    command: test
-    projects: '**/Test.*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+#- task: DotNetCoreCLI@2
+#  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
+#  inputs:
+#    command: test
+#    projects: '**/Test.*.csproj'
+#    arguments: '--configuration $(buildConfiguration)'
 
 - task: NuGetCommand@2
   inputs:
