@@ -40,10 +40,6 @@ steps:
   inputs:
     command: pack
     packagesToPack: '**/Postmates.NET.csproj'
-    versioningScheme: byPrereleaseNumber
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'
     configuration: '$(BuildConfiguration)'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
@@ -53,10 +49,7 @@ steps:
     nuGetFeedType: external
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     publishFeedCredentials: 'nuget'
-    versioningScheme: byPrereleaseNumber
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'
+
 
 
 
