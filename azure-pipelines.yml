@@ -2,21 +2,25 @@
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+
+variables:
+  buildConfiguration: 'Release'
+  POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
+  POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
+  Major: '1'
+  Minor: '0'
+  Patch: '0'
+trigger: master
+
+
+
 jobs:
 - job: build/test
-  trigger:
-  - master
 
   pool:
     vmImage: 'vs2017-win2016'
-
-  variables:
-    buildConfiguration: 'Release'
-    POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
-    POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
-    Major: '1'
-    Minor: '0'
-    Patch: '0'
+ 
   steps: 
   - task: NuGetToolInstaller@0
   displayName: 'Use NuGet 4.9.1'
@@ -37,8 +41,6 @@ jobs:
   
 
 - job: release
-  trigger:
-  - master
 
   pool:
     vmImage: 'vs2017-win2016'
