@@ -51,7 +51,7 @@ steps:
   inputs:
     command: push
     nuGetFeedType: external
-    packagesToPush: '*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     publishFeedCredentials: 'nuget'
     versioningScheme: byPrereleaseNumber
     majorVersion: '$(Major)'
