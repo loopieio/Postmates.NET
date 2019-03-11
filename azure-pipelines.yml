@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: Hosted VS2017
 
 variables:
   buildConfiguration: 'Release'
@@ -18,8 +18,13 @@ variables:
   Patch: '0'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.9.1'
+  inputs:
+    versionSpec: 4.9.1
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build'
 
 - task: DotNetCoreCLI@2
   env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
@@ -49,3 +54,7 @@ steps:
     majorVersion: '$(Major)'
     minorVersion: '$(Minor)'
     patchVersion: '$(Patch)'
+
+
+
+
