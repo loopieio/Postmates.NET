@@ -12,9 +12,8 @@ variables:
   Patch: '0'
 
 jobs:
-- job: master_merge
-  
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+- job: build_test
+  condition: always()
   pool:
     vmImage: 'vs2017-win2016'
 #Your build pipeline references an undefined variable named ‘buildConfiguration’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
@@ -38,7 +37,6 @@ jobs:
   #    arguments: '--configuration $(buildConfiguration)'
 
 - job: release
-  
   condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['Build.Reason'], 'PullRequest')))
   pool:
     vmImage: 'vs2017-win2016'
