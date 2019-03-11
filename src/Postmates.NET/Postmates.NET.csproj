@@ -13,6 +13,7 @@
     <Authors>Marcus Bowyer</Authors>
     <Company>Loopie.io</Company>
     <Product>Postmates.NET</Product>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
