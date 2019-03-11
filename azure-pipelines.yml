@@ -22,29 +22,6 @@ steps:
 #    projects: '**/Test.*.csproj'
 #    arguments: '--configuration $(buildConfiguration)'
 
-# File: templates/release.yaml
-steps:
-- task: NuGetCommand@2
-    inputs:
-      command: pack
-      packagesToPack: '**/Postmates.NET.csproj'
-      configuration: '$(BuildConfiguration)'
-      packDestination: '$(Build.ArtifactStagingDirectory)'
-      versioningScheme: byBuildNumber
-      majorVersion: '$(Major)'
-      minorVersion: '$(Minor)'
-      patchVersion: '$(Patch)'
-
-  - task: NuGetCommand@2
-    inputs:
-      command: push
-      nuGetFeedType: external
-      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-      publishFeedCredentials: 'nuget'
-      versioningScheme: byBuildNumber
-      majorVersion: '$(Major)'
-      minorVersion: '$(Minor)'
-      patchVersion: '$(Patch)'
 
 jobs:
 - job: build/test
@@ -81,8 +58,27 @@ jobs:
     Patch: '0'
   steps: 
   - template: templates/build.yaml 
-  - template: templates/release.yaml 
+  - task: NuGetCommand@2
+      inputs:
+        command: pack
+        packagesToPack: '**/Postmates.NET.csproj'
+        configuration: '$(BuildConfiguration)'
+        packDestination: '$(Build.ArtifactStagingDirectory)'
+        versioningScheme: byBuildNumber
+        majorVersion: '$(Major)'
+        minorVersion: '$(Minor)'
+        patchVersion: '$(Patch)'
 
+    - task: NuGetCommand@2
+      inputs:
+        command: push
+        nuGetFeedType: external
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        publishFeedCredentials: 'nuget'
+        versioningScheme: byBuildNumber
+        majorVersion: '$(Major)'
+        minorVersion: '$(Minor)'
+        patchVersion: '$(Patch)'
 
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['Build.Reason'], 'PullRequest')))
 
