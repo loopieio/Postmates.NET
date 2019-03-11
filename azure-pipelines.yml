@@ -8,8 +8,8 @@ variables:
   POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
 
 jobs:
-- job: build_test
-  condition: always()
+- job: PR test
+  condition: eq(variables['Build.Reason'], 'PullRequest')
   pool:
     vmImage: 'vs2017-win2016'
 #Your build pipeline references an undefined variable named ‘buildConfiguration’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
