@@ -3,7 +3,6 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-
 variables:
   buildConfiguration: 'Release'
   POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
@@ -11,21 +10,20 @@ variables:
   Major: '1'
   Minor: '0'
   Patch: '0'
-trigger: master
-
-
 
 jobs:
-- job: build/test
-
+- job: master_merge
+  
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   pool:
     vmImage: 'vs2017-win2016'
- 
+#Your build pipeline references an undefined variable named ‘buildConfiguration’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
   steps: 
   - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.9.1'
-  inputs:
-    versionSpec: 4.9.1
+    displayName: 'Use NuGet 4.9.1'
+    inputs:
+      versionSpec: 4.9.1
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
@@ -33,30 +31,24 @@ jobs:
       arguments: '--configuration $(buildConfiguration)'
 
   #- task: DotNetCoreCLI@2
-   #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
+  #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
   #  inputs:
   #    command: test
   #    projects: '**/Test.*.csproj'
   #    arguments: '--configuration $(buildConfiguration)'
-  
 
 - job: release
-
+  
+  condition: and(eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['Build.Reason'], 'PullRequest')))
   pool:
     vmImage: 'vs2017-win2016'
+#Your build pipeline references an undefined variable named ‘buildConfiguration’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
-  variables:
-    buildConfiguration: 'Release'
-    POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
-    POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
-    Major: '1'
-    Minor: '0'
-    Patch: '0'
   steps: 
   - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.9.1'
-  inputs:
-    versionSpec: 4.9.1
+    displayName: 'Use NuGet 4.9.1'
+    inputs:
+      versionSpec: 4.9.1
 
   - task: DotNetCoreCLI@2
     displayName: 'dotnet build'
@@ -64,21 +56,18 @@ jobs:
       arguments: '--configuration $(buildConfiguration)'
 
   #- task: DotNetCoreCLI@2
-   #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
+  #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
   #  inputs:
   #    command: test
   #    projects: '**/Test.*.csproj'
   #    arguments: '--configuration $(buildConfiguration)'
+
   - task: NuGetCommand@2
     inputs:
       command: pack
       packagesToPack: '**/Postmates.NET.csproj'
       configuration: '$(BuildConfiguration)'
       packDestination: '$(Build.ArtifactStagingDirectory)'
-      versioningScheme: byBuildNumber
-      majorVersion: '$(Major)'
-      minorVersion: '$(Minor)'
-      patchVersion: '$(Patch)'
 
   - task: NuGetCommand@2
     inputs:
@@ -86,10 +75,3 @@ jobs:
       nuGetFeedType: external
       packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
       publishFeedCredentials: 'nuget'
-      versioningScheme: byBuildNumber
-      majorVersion: '$(Major)'
-      minorVersion: '$(Minor)'
-      patchVersion: '$(Patch)'
-
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['Build.Reason'], 'PullRequest')))
-
