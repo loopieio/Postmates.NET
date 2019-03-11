@@ -8,7 +8,7 @@ variables:
   POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
 
 jobs:
-- job: PR test
+- job: PR_test
   condition: eq(variables['Build.Reason'], 'PullRequest')
   pool:
     vmImage: 'vs2017-win2016'
