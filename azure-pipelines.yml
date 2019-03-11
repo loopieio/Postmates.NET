@@ -3,20 +3,7 @@
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-trigger:
-- master
-
-pool:
-  vmImage: 'vs2017-win2016'
-
-variables:
-  buildConfiguration: 'Release'
-  POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
-  POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
-  Major: '1'
-  Minor: '0'
-  Patch: '0'
-
+# File: templates/build.yaml
 steps:
 - task: NuGetToolInstaller@0
   displayName: 'Use NuGet 4.9.1'
@@ -28,7 +15,6 @@ steps:
   inputs:
     arguments: '--configuration $(buildConfiguration)'
 
-
 #- task: DotNetCoreCLI@2
 #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
 #  inputs:
@@ -36,21 +22,67 @@ steps:
 #    projects: '**/Test.*.csproj'
 #    arguments: '--configuration $(buildConfiguration)'
 
+# File: templates/release.yaml
+steps:
 - task: NuGetCommand@2
-  inputs:
-    command: pack
-    packagesToPack: '**/Postmates.NET.csproj'
-    configuration: '$(BuildConfiguration)'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
+    inputs:
+      command: pack
+      packagesToPack: '**/Postmates.NET.csproj'
+      configuration: '$(BuildConfiguration)'
+      packDestination: '$(Build.ArtifactStagingDirectory)'
+      versioningScheme: byBuildNumber
+      majorVersion: '$(Major)'
+      minorVersion: '$(Minor)'
+      patchVersion: '$(Patch)'
 
-- task: NuGetCommand@2
-  inputs:
-    command: push
-    nuGetFeedType: external
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-    publishFeedCredentials: 'nuget'
+  - task: NuGetCommand@2
+    inputs:
+      command: push
+      nuGetFeedType: external
+      packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+      publishFeedCredentials: 'nuget'
+      versioningScheme: byBuildNumber
+      majorVersion: '$(Major)'
+      minorVersion: '$(Minor)'
+      patchVersion: '$(Patch)'
+
+jobs:
+- job: build/test
+  trigger:
+  - master
+
+  pool:
+    vmImage: 'vs2017-win2016'
+
+  variables:
+    buildConfiguration: 'Release'
+    POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
+    POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
+    Major: '1'
+    Minor: '0'
+    Patch: '0'
+  steps: 
+  - template: templates/build.yaml 
+  
+
+- job: release
+  trigger:
+  - master
+
+  pool:
+    vmImage: 'vs2017-win2016'
+
+  variables:
+    buildConfiguration: 'Release'
+    POSTMATES_CUSTOMER_ID: '$(postmates.customerId)'
+    POSTMATES_SIGNATURE_SECRET: '$(postmates.signatureSecret)'
+    Major: '1'
+    Minor: '0'
+    Patch: '0'
+  steps: 
+  - template: templates/build.yaml 
+  - template: templates/release.yaml 
 
 
-
-
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), not(eq(variables['Build.Reason'], 'PullRequest')))
 
