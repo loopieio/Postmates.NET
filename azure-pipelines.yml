@@ -2,27 +2,6 @@
 # Build and test ASP.NET Core projects targeting .NET Core.
 # Add steps that run tests, create a NuGet package, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
-# File: templates/build.yaml
-steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.9.1'
-  inputs:
-    versionSpec: 4.9.1
-
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
-  inputs:
-    arguments: '--configuration $(buildConfiguration)'
-
-#- task: DotNetCoreCLI@2
-#  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
-#  inputs:
-#    command: test
-#    projects: '**/Test.*.csproj'
-#    arguments: '--configuration $(buildConfiguration)'
-
-
 jobs:
 - job: build/test
   trigger:
@@ -39,7 +18,22 @@ jobs:
     Minor: '0'
     Patch: '0'
   steps: 
-  - template: templates/build.yaml 
+  - task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.9.1'
+  inputs:
+    versionSpec: 4.9.1
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      arguments: '--configuration $(buildConfiguration)'
+
+  #- task: DotNetCoreCLI@2
+   #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
+  #  inputs:
+  #    command: test
+  #    projects: '**/Test.*.csproj'
+  #    arguments: '--configuration $(buildConfiguration)'
   
 
 - job: release
@@ -57,7 +51,22 @@ jobs:
     Minor: '0'
     Patch: '0'
   steps: 
-  - template: templates/build.yaml 
+  - task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.9.1'
+  inputs:
+    versionSpec: 4.9.1
+
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet build'
+    inputs:
+      arguments: '--configuration $(buildConfiguration)'
+
+  #- task: DotNetCoreCLI@2
+   #  env: { "POSTMATES_CUSTOMER_ID": '$(postmates.customerId)', "POSTMATES_SIGNATURE_SECRET": '$(postmates.signatureSecret)' }
+  #  inputs:
+  #    command: test
+  #    projects: '**/Test.*.csproj'
+  #    arguments: '--configuration $(buildConfiguration)'
   - task: NuGetCommand@2
     inputs:
       command: pack
