@@ -5,15 +5,15 @@
     <LangVersion>7.1</LangVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>A Postmates API client for .NET</Description>
-    <RepositoryUrl>https://github.com/LoopieLLC/Postmates.NET</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/LoopieLLC/Postmates.NET</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/LoopieLLC/Postmates.NET/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/loopieio/Postmates.NET</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/loopieio/Postmates.NET</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/loopieio/Postmates.NET/blob/master/LICENSE</PackageLicenseUrl>
     <AssemblyName>Postmates.NET</AssemblyName>
     <PackageId>Postmates.NET</PackageId>
     <Authors>Marcus Bowyer</Authors>
     <Company>Loopie.io</Company>
     <Product>Postmates.NET</Product>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
