@@ -126,7 +126,7 @@ namespace Postmates.API
         /// <returns></returns>
         public async Task VerifyTokenAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await GetOngoingDeliveriesAsync(cancellationToken);
+            await GetOngoingDeliveriesAsync();
         }
 
         /// <summary>
