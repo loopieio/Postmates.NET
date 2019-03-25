@@ -14,7 +14,12 @@ jobs:
     vmImage: 'vs2017-win2016'
 #Your build pipeline references an undefined variable named �buildConfiguration�. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
-  steps: 
+  steps:
+  - task: DotNetCoreInstaller@0
+    displayName: 'Use .NET Core sdk 3.0.100-preview-010184'
+    inputs:
+    version: '3.0.100-preview3-010431'
+
   - task: NuGetToolInstaller@0
     displayName: 'Use NuGet 4.9.1'
     inputs:
@@ -38,7 +43,12 @@ jobs:
     vmImage: 'vs2017-win2016'
 #Your build pipeline references an undefined variable named �buildConfiguration�. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
-  steps: 
+  steps:
+  - task: DotNetCoreInstaller@0
+    displayName: 'Use .NET Core sdk 3.0.100-preview-010184'
+    inputs:
+    version: '3.0.100-preview3-010431'
+
   - task: NuGetToolInstaller@0
     displayName: 'Use NuGet 4.9.1'
     inputs:
