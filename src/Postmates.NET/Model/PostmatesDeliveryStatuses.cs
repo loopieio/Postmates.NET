@@ -49,7 +49,15 @@ namespace Postmates.Model
         /// Dropoff
         /// </summary>
         [EnumMember(Value = "dropoff")]
-        Dropoff
+        Dropoff,
 
+        /// <summary>
+        /// Pickup Complete
+        /// </summary>
+        [EnumMember(Value = "pickup_complete")]
+        PickupComplete
+
+
+            
     }
 }
