@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>7.1</LangVersion>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>8.0</LangVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>A Postmates API client for .NET</Description>
     <RepositoryUrl>https://github.com/loopieio/Postmates.NET</RepositoryUrl>
@@ -19,11 +19,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GeoJSON.Net" Version="1.1.73" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.6.0-preview3.19128.7" />
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.0.0-preview3.19128.7" />
-    <PackageReference Include="Neon.Common" Version="0.3.1-alpha" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="GeoJSON.Net" Version="1.2.14" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.0" />
+    <PackageReference Include="Neon.Common" Version="1.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
 </Project>
