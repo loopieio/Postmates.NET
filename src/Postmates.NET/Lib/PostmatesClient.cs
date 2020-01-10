@@ -4,15 +4,11 @@
 // COPYRIGHT:	Copyright (c) 2017-2018 by Loopie, LLC.  All rights reserved.
 
 using GeoJSON.Net.Feature;
-
+using Neon.Collections;
 using Neon.Net;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 using Postmates.Model;
-using Postmates.API;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +21,7 @@ namespace Postmates.API
 {
     /// <summary>
     /// The Postmates Client.
+    /// https://github.com/loopieio/Postmates.NET
     /// </summary>
     public class PostmatesClient : IDisposable
     {
@@ -32,37 +29,39 @@ namespace Postmates.API
         // Static members
 
         //---------------------------------------------------------------------
+        // https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md
+        // https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/framework-design-guidelines-digest.md
         // Instance members
 
-        private JsonClient restClient;
-        private JsonSerializerSettings _jsonSettings;
-        private string serviceUri;
-        private string customerId;
-        private string signatureSecret;
-        private string token;
-        private bool isDisposed;
+        private readonly JsonClient _jsonClient;
+        private readonly JsonSerializerSettings _jsonSettings;
+        private readonly string _customerId;
+        private readonly string _apiKey;
+        private readonly string _serviceUrl;
+        private bool _isDisposed;
 
-        
+
+
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="account"></param>
         /// <param name="serviceUri"></param>
-        public PostmatesClient(PostmatesAccount account, string serviceUri = "https://api.postmates.com")
+        public PostmatesClient(PostmatesAccount account, string serviceUri = "https://api.postmates.com/")
         {
-            this.serviceUri = serviceUri;
-            this.customerId = account.CustomerId;
-            this.signatureSecret = account.SignatureSecret;
-            this.token = Convert.ToBase64String(Encoding.UTF8.GetBytes(this.signatureSecret + ":")); // password is blank
-            this.restClient = new JsonClient()
-
+            _customerId = account.CustomerId;
+            _apiKey = account.ApiKey;
+            _serviceUrl = serviceUri;
+            var token = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_apiKey}:{string.Empty}")); // password is blank
+            _jsonClient = new JsonClient()
             {
-                BaseAddress = new Uri(serviceUri)
+                BaseAddress = new Uri(serviceUri),
+                DocumentType = "application/x-www-form-urlencoded"
             };
 
-            restClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", this.token);
+            _jsonClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
 
-            this._jsonSettings = new JsonSerializerSettings
+            _jsonSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 DateFormatString = "yyy-MM-ddTHH:mm:ss.ffZ"
@@ -72,51 +71,16 @@ namespace Postmates.API
             VerifyTokenAsync().Wait();
         }
 
-        
+
 
         /// <summary>
         /// Returns the relative URI for an operation path and optional query arguments.
         /// </summary>
         /// <param name="path">The operation path.</param>
-        /// <param name="args">Optional query arguments formatted as <b>name=value</b>.</param>
         /// <returns></returns>
-        private string FormatPath(string path, params string[] args)
+        private string FormatPath(string path)
         {
-            path = $"/v1/customers/{customerId}/{path}";
-
-            if (!path.EndsWith("/"))
-            {
-                path += "/";
-            }
-
-            if (args != null && args.Length > 0)
-            {
-
-                path += "?";
-
-                var first = true;
-
-                foreach (var arg in args)
-                {
-                    if (string.IsNullOrEmpty(arg))
-                    {
-                        continue;
-                    }
-
-                    if (first)
-                    {
-                        first = false;
-                    }
-                    else
-                    {
-                        path += "&";
-                    }
-
-                    path += arg;
-                }
-            }
-
-            return path;
+            return $"/v1/customers/{_customerId}/{path}";
         }
 
         /// <summary>
@@ -185,8 +149,9 @@ namespace Postmates.API
                         Newtonsoft.Json.Formatting.None,
                         _jsonSettings);
                     value = (string)value.Trim('"');
-                } 
-                if (!string.IsNullOrEmpty(value)) {
+                }
+                if (!string.IsNullOrEmpty(value))
+                {
                     if (!first)
                     {
                         payloadString += "&";
@@ -198,7 +163,7 @@ namespace Postmates.API
 
             var payload = new JsonClientPayload("application/x-www-form-urlencoded", payloadString);
 
-            return await restClient.PostAsync<T>(url, payload);
+            return await _jsonClient.PostAsync<T>(url, payload);
         }
 
         /// <summary>
@@ -208,11 +173,10 @@ namespace Postmates.API
         /// <param name="cancellationToken"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<T>> GetListAsync<T>(string url, CancellationToken cancellationToken = default(CancellationToken), params string[] args)
+        public async Task<IEnumerable<T>> GetListAsync<T>(string url, ArgDictionary args = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             var data = new List<T>();
-
-            var response = await restClient.GetAsync<dynamic>(url, cancellationToken: cancellationToken);
+            var response = await _jsonClient.GetAsync<dynamic>(url, args, cancellationToken: cancellationToken);
 
             while (response != null)
             {
@@ -222,11 +186,14 @@ namespace Postmates.API
                     data.Add(elemObject);
                 }
 
+                var nextPage = (string)response.next_href;
+
                 // get the next page
-                if (response.next_href != null)
+                if (string.IsNullOrWhiteSpace(nextPage) == false)
                 {
-                    response = await restClient.GetAsync<dynamic>((string)response.next_href, cancellationToken: cancellationToken);
-                } else
+                    response = await _jsonClient.GetAsync<dynamic>(nextPage, cancellationToken: cancellationToken);
+                }
+                else
                 {
                     response = null;
                 }
@@ -254,19 +221,22 @@ namespace Postmates.API
         {
             args.Validate();
 
-            // Create the argument oobject to be sent to Postmates
-            // Address needs formatting as a string, etc.
-            dynamic jsonObject = new JObject();
-            jsonObject.pickup_address = args.PickupAddress.ToString();
-            jsonObject.pickup_latitude = args.PickupLatitude;
-            jsonObject.pickup_longitude = args.PickupLongitude;
-            jsonObject.pickup_phone_number = args.PickupPhoneNumber;
-            jsonObject.dropoff_address = args.DropoffAddress.ToString();
-            jsonObject.dropoff_latitude = args.DropoffLatitude;
-            jsonObject.dropoff_longitude = args.DropoffLongitude;
-            jsonObject.dropoff_phone_number = args.DropoffPhoneNumber;
+            var deliveryQuoteArguments = new
+            {
+                pickup_address = args.PickupAddress.ToString(),
+                pickup_latitude = args.PickupLatitude,
+                pickup_longitude = args.PickupLongitude,
+                pickup_phone_number = args.PickupPhoneNumber,
+                dropoff_address = args.DropoffAddress.ToString(),
+                dropoff_latitude = args.DropoffLatitude,
+                dropoff_longitude = args.DropoffLongitude,
+                dropoff_phone_number = args.DropoffPhoneNumber,
+                dropoff_ready_dt = args.DropOffReady,
+                pickup_deadline_dt = args.PickupDeadline,
+                pickup_ready_dt = args.PickupReady
+            };
 
-            var result = await PostFormAsync<PostmatesDeliveryQuote>(FormatPath("delivery_quotes"), jsonObject, cancellationToken: cancellationToken);
+            var result = await PostFormAsync<PostmatesDeliveryQuote>(FormatPath("delivery_quotes"), deliveryQuoteArguments, cancellationToken: cancellationToken);
 
             return result;
         }
@@ -282,7 +252,7 @@ namespace Postmates.API
         /// <returns></returns>
         public async Task<IEnumerable<FeatureCollection>> GetDeliveryZonesAsync(CancellationToken cancellationToken = default)
         {
-            return await restClient.GetAsync<IEnumerable<FeatureCollection>>("/v1/delivery_zones", cancellationToken: cancellationToken);
+            return await _jsonClient.GetAsync<IEnumerable<FeatureCollection>>("/v1/delivery_zones", cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -367,10 +337,12 @@ namespace Postmates.API
         /// <returns></returns>
         public async Task<IEnumerable<PostmatesDelivery>> GetOngoingDeliveriesAsync(CancellationToken cancellationToken = default)
         {
-            string[] args = {
-                "filter=ongoing"
+            var arguments = new ArgDictionary
+            {
+                { "filter", "ongoing" }
             };
-            return await GetListAsync<PostmatesDelivery>(FormatPath("deliveries", args: args), cancellationToken: cancellationToken);
+
+            return await GetListAsync<PostmatesDelivery>(FormatPath("deliveries"), arguments, cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +350,7 @@ namespace Postmates.API
         /// </summary>
         public async Task<PostmatesDelivery> GetDeliveryAsync(string deliveryId, CancellationToken cancellationToken = default)
         {
-            return await restClient.GetAsync<PostmatesDelivery>(FormatPath($"deliveries/{deliveryId}"));
+            return await _jsonClient.GetAsync<PostmatesDelivery>(FormatPath($"deliveries/{deliveryId}"));
         }
 
         /// <summary>
@@ -387,7 +359,7 @@ namespace Postmates.API
         /// </summary>
         public async Task<PostmatesDelivery> CancelDeliveryAsync(string deliveryId, CancellationToken cancellationToken = default)
         {
-            return await restClient.PostAsync<PostmatesDelivery>(FormatPath($"deliveries/{deliveryId}/cancel"), null);
+            return await _jsonClient.PostAsync<PostmatesDelivery>(FormatPath($"deliveries/{deliveryId}/cancel"), null);
         }
 
         /// <summary>
@@ -414,12 +386,12 @@ namespace Postmates.API
         /// <param name="disposing">Pass <c>true</c> if we're disposing, <c>false</c> if we're finalizing.</param>
         protected virtual void Dispose(bool disposing)
         {
-            lock (restClient)
+            lock (_jsonClient)
             {
-                if (!isDisposed)
+                if (!_isDisposed)
                 {
-                    restClient.Dispose();
-                    isDisposed = true;
+                    _jsonClient.Dispose();
+                    _isDisposed = true;
                 }
             }
         }

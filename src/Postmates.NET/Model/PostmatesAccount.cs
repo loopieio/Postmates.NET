@@ -3,13 +3,7 @@
 // CONTRIBUTOR: Marcus Bowyer
 // COPYRIGHT:	Copyright (c) 2019 by Loopie, LLC.  All rights reserved.
 
-using System;
-using System.ComponentModel;
-
-using Neon.Common;
-
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Postmates.API
 {
@@ -23,10 +17,10 @@ namespace Postmates.API
         /// </summary>
         /// <param name="customerId"></param>
         /// <param name="secret"></param>
-        public PostmatesAccount(string customerId, string secret)
+        public PostmatesAccount(string customerId, string apiKey)
         {
             CustomerId = customerId;
-            SignatureSecret = secret;
+            ApiKey = apiKey;
         }
 
         /// <summary>
@@ -39,6 +33,6 @@ namespace Postmates.API
         /// The REST API signature secret.
         /// </summary>
         [JsonProperty(PropertyName = "SignatureSecret", Required = Required.Always)]
-        public string SignatureSecret { get; set; }
+        public string ApiKey { get; set; }
     }
 }

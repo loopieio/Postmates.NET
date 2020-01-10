@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Extensions.Configuration;
 
 namespace Test.Postmates
 {
@@ -14,7 +15,9 @@ namespace Test.Postmates
     /// </summary>
     public class Test_Postmates
     {
-        public PostmatesClient client { get; }
+        public PostmatesClient PostmatesClient { get; }
+
+        public IConfiguration Configuration { get; set; }
 
         /// <summary>
         /// Constructor.
@@ -22,9 +25,20 @@ namespace Test.Postmates
         /// <param name="fixture">The startup class of the service to be tested.</param>
         public Test_Postmates()
         {
-            var customerId = Environment.GetEnvironmentVariable("POSTMATES_CUSTOMER_ID");
-            var signatureSecret = Environment.GetEnvironmentVariable("POSTMATES_SIGNATURE_SECRET");
-            client = new PostmatesClient(new PostmatesAccount(customerId, signatureSecret));
+            // https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.1&tabs=windows
+            // https://patrickhuber.github.io/2017/07/26/avoid-secrets-in-dot-net-core-tests.html
+            // In project directory cmd:
+            // dotnet user-secrets init
+            // dotnet user-secrets set "Postmates.ServiceApiKey" "[Sandbox Key]"
+            // dotnet user-secrets set "Postmates.CustomerId" [Customer Id]"
+
+            var builder = new ConfigurationBuilder()
+              .AddUserSecrets<Test_Postmates>();
+
+            Configuration = builder.Build();
+            var customerId = Configuration.GetValue<string>("Postmates.CustomerId");
+            var apiKey = Configuration.GetValue<string>("Postmates.ServiceApiKey");
+            PostmatesClient = new PostmatesClient(new PostmatesAccount(customerId, apiKey));
         }
 
         
@@ -65,7 +79,7 @@ namespace Test.Postmates
                 DropoffPhoneNumber = "+1 (315) 514-0118"
             };
 
-            var deliveryQuote = await client.GetDeliveryQuoteAsync(deliveryQuoteArgs);
+            var deliveryQuote = await PostmatesClient.GetDeliveryQuoteAsync(deliveryQuoteArgs);
 
             Assert.IsType<PostmatesDeliveryQuote>(deliveryQuote);
         }
@@ -80,7 +94,7 @@ namespace Test.Postmates
         [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
         public async Task GetDeliveryZonesAsync()
         {
-            var result = await client.GetDeliveryZonesAsync();
+            var result = await PostmatesClient.GetDeliveryZonesAsync();
             Assert.NotEmpty(result);
         }
 
@@ -135,7 +149,7 @@ namespace Test.Postmates
                 DropoffPhoneNumber = "3155140118",
                 DropoffNotes = "Ring doorbell/Call"
             };
-            var result = await client.CreateDeliveryAsync(delivery);
+            var result = await PostmatesClient.CreateDeliveryAsync(delivery);
             Assert.IsType<PostmatesDelivery>(result);
         }
 
@@ -149,7 +163,7 @@ namespace Test.Postmates
         [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
         public async Task ListDeliveriesAsync()
         {
-            var result = await client.GetDeliveriesAsync();
+            var result = await PostmatesClient.GetDeliveriesAsync();
             Assert.NotEmpty(result);
         }
 
@@ -196,9 +210,9 @@ namespace Test.Postmates
                 DropofffDeadline = DateTime.UtcNow.AddMinutes(60)
             };
 
-            var ongoingDelivery = await client.CreateDeliveryAsync(deliveryCreateArgs);
+            var ongoingDelivery = await PostmatesClient.CreateDeliveryAsync(deliveryCreateArgs);
 
-            var result = await client.GetOngoingDeliveriesAsync();
+            var result = await PostmatesClient.GetOngoingDeliveriesAsync();
             
             /// $todo(marcus.bowyer)
             ///     figure out how to make this actually return something
@@ -215,9 +229,9 @@ namespace Test.Postmates
         [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
         public async Task GetDeliveryAsync()
         {
-            var deliveries = await client.GetDeliveriesAsync();
+            var deliveries = await PostmatesClient.GetDeliveriesAsync();
             var id = deliveries.FirstOrDefault().Id;
-            var result = await client.GetDeliveryAsync(id);
+            var result = await PostmatesClient.GetDeliveryAsync(id);
             Assert.True(result.Id == id);
         }
 
@@ -268,9 +282,9 @@ namespace Test.Postmates
                 DropofffDeadline = DateTime.UtcNow.AddMinutes(60)
             };
 
-            var deliveryToCancel = await client.CreateDeliveryAsync(deliveryCreateArgs);
+            var deliveryToCancel = await PostmatesClient.CreateDeliveryAsync(deliveryCreateArgs);
 
-            var result = await client.CancelDeliveryAsync(deliveryToCancel.Id);
+            var result = await PostmatesClient.CancelDeliveryAsync(deliveryToCancel.Id);
             Assert.True(deliveryToCancel.Id == result.Id);
             Assert.True(result.Status == PostmatesDeliveryStatuses.Canceled);
         }
@@ -291,7 +305,7 @@ namespace Test.Postmates
             Random rnd = new Random();
             var tipAmount = rnd.Next(1, 1000);
 
-            var deliveries = await client.GetDeliveriesAsync();
+            var deliveries = await PostmatesClient.GetDeliveriesAsync();
 
             var deliveryToTip = deliveries.Where(d => d.Status == PostmatesDeliveryStatuses.Delivered
                                                     && d.Tip is null).FirstOrDefault();
@@ -301,7 +315,7 @@ namespace Test.Postmates
                 TipByCustomer = tipAmount
             };
 
-            var result = await client.TipCourierAsync(deliveryToTip.Id, tipArgs);
+            var result = await PostmatesClient.TipCourierAsync(deliveryToTip.Id, tipArgs);
 
             Assert.True(result.Tip == tipAmount);
             Assert.True(result.Id == deliveryToTip.Id);

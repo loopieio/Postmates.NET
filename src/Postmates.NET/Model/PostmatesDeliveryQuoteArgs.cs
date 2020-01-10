@@ -3,17 +3,8 @@
 // CONTRIBUTOR: Marcus Bowyer
 // COPYRIGHT:	Copyright (c) 2019 by Loopie, LLC.  All rights reserved.
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
-
-using Neon.Common;
-
-using Postmates.Model;
-using Postmates.API;
-
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System;
 
 namespace Postmates.Model
 {
@@ -86,6 +77,24 @@ namespace Postmates.Model
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_phone_number", Required = Required.Always)]
         public string DropoffPhoneNumber { get; set; }
+
+        /// <summary>
+        /// Date/Time for when a delivery is ready to be dropped off.
+        /// </summary>
+        [JsonProperty(PropertyName = "dropoff_ready_dt", Required = Required.Default)]
+        public DateTime? DropOffReady { get; set; }
+
+        /// <summary>
+        /// Date/Time for when a delivery must be picked up by.
+        /// </summary>
+        [JsonProperty(PropertyName = "pickup_deadline_dt", Required = Required.Default)]
+        public DateTime? PickupDeadline { get; set; }
+
+        /// <summary>
+        /// Date/Time for when order will be ready for pickup
+        /// </summary>
+        [JsonProperty(PropertyName = "pickup_ready_dt", Required = Required.Default)]
+        public DateTime? PickupReady { get; set; }
 
         /// <summary>
         /// Validates the devlivery quote arguments are ready to be sent to postmates
