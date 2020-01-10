@@ -21,8 +21,6 @@ namespace Postmates.API
 {
     /// <summary>
     /// The Postmates Client.
-    /// https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md
-    /// https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/framework-design-guidelines-digest.md
     /// https://github.com/loopieio/Postmates.NET
     /// </summary>
     public class PostmatesClient : IDisposable
@@ -31,6 +29,8 @@ namespace Postmates.API
         // Static members
 
         //---------------------------------------------------------------------
+        // https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md
+        // https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/framework-design-guidelines-digest.md
         // Instance members
 
         private readonly JsonClient _jsonClient;
