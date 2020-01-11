@@ -16,10 +16,8 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
     - name: Configure secrets
-      run: dotnet user-secrets init --project Test\Test.Postmates.NET\Test.Postmates.NET.csproj
-    - name: Set sandbox key
-      run: dotnet user-secrets set "Postmates.ServiceApiKey" ${{ secrets.SANDBOX_KEY }} --project Test\Test.Postmates.NET\Test.Postmates.NET.csproj
-    - name: Set user id
-      run: dotnet user-secrets set "Postmates.CustomerId" ${{ secrets.CUSTOMER_ID }} --project Test\Test.Postmates.NET\Test.Postmates.NET.csproj
+      run: dotnet user-secrets init --project Test/Test.Postmates.NET/Test.Postmates.NET.csproj \
+           && dotnet user-secrets set "Postmates.ServiceApiKey" ${{ secrets.SANDBOX_KEY }} --project Test/Test.Postmates.NET/Test.Postmates.NET.csproj \
+           && dotnet user-secrets set "Postmates.CustomerId" ${{ secrets.CUSTOMER_ID }} --project Test/Test.Postmates.NET/Test.Postmates.NET.csproj
     - name: run tests
-      run: dotnet test Test\Test.Postmates.NET\Test.Postmates.NET.csproj
+      run: dotnet test Test/Test.Postmates.NET/Test.Postmates.NET.csproj
