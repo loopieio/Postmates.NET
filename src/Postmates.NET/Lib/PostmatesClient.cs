@@ -5,6 +5,7 @@
 
 using GeoJSON.Net.Feature;
 using Neon.Collections;
+using Neon.Common;
 using Neon.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,6 +29,11 @@ namespace Postmates.API
         //----------------------------------------------------
         // Static members
 
+        /// <summary>
+        /// Default page size for getting list data.
+        /// </summary>
+        private const int pageSize = 32;
+
         //---------------------------------------------------------------------
         // https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/coding-style.md
         // https://github.com/dotnet/corefx/blob/master/Documentation/coding-guidelines/framework-design-guidelines-digest.md
@@ -39,8 +45,6 @@ namespace Postmates.API
         private readonly string _apiKey;
         private readonly string _serviceUrl;
         private bool _isDisposed;
-
-
 
         /// <summary>
         /// Constructor.
@@ -175,23 +179,40 @@ namespace Postmates.API
         /// <returns></returns>
         public async Task<IEnumerable<T>> GetListAsync<T>(string url, ArgDictionary args = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (args == null)
+            {
+                args = new ArgDictionary();
+            }
+
+            if (args.ContainsKey("limit"))
+            {
+                args.Remove("limit");
+            }
+
+            args.Add("limit", pageSize);
+
             var data = new List<T>();
             var response = await _jsonClient.GetAsync<dynamic>(url, args, cancellationToken: cancellationToken);
+            var total = (int)response.total_count;
 
             while (response != null)
             {
+                var s = NeonHelper.JsonSerialize(response);
                 foreach (dynamic elem in response.data)
                 {
                     T elemObject = JsonConvert.DeserializeObject<T>(Convert.ToString(elem));
                     data.Add(elemObject);
                 }
 
-                var nextPage = (string)response.next_href;
-
                 // get the next page
-                if (string.IsNullOrWhiteSpace(nextPage) == false)
+                if (total > data.Count)
                 {
-                    response = await _jsonClient.GetAsync<dynamic>(nextPage, cancellationToken: cancellationToken);
+                    if (args.ContainsKey("offset"))
+                    {
+                        args.Remove("offset");
+                    }
+                    args.Add("offset", data.Count.ToString());
+                    response = await _jsonClient.GetAsync<dynamic>(url, args, cancellationToken: cancellationToken);
                 }
                 else
                 {
