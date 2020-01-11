@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/loopieio/Postmates.NET/master/postmates-logo-1.png" height="50">
 
-![Actions status](https://github.com/loopieio/Postmates.NET/workflows/Build%20and%20test/badge.svg)
+![Actions status](https://github.com/loopieio/Postmates.NET/workflows/Release/badge.svg)
 ![Nuget](https://img.shields.io/nuget/v/Postmates.NET.svg)
 
 ## Documentation
