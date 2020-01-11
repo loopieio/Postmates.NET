@@ -31,6 +31,12 @@ namespace Postmates.Model
         /// Large
         /// </summary>
         [EnumMember(Value = "large")]
-        Large
+        Large,
+
+        /// <summary>
+        /// Extra Large
+        /// </summary>
+        [EnumMember(Value = "xlarge")]
+        ExtraLarge
     }
 }
