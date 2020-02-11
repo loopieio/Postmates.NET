@@ -30,9 +30,9 @@ namespace Postmates.API
         public string CustomerId { get; set; }
 
         /// <summary>
-        /// The REST API signature secret.
+        /// The REST API key.
         /// </summary>
-        [JsonProperty(PropertyName = "SignatureSecret", Required = Required.Always)]
+        [JsonProperty(PropertyName = "ApiKey", Required = Required.Always)]
         public string ApiKey { get; set; }
     }
 }
