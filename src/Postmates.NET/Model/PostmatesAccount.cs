@@ -5,6 +5,8 @@
 
 using Newtonsoft.Json;
 
+using YamlDotNet.Serialization;
+
 namespace Postmates.API
 {
     /// <summary>
@@ -27,12 +29,14 @@ namespace Postmates.API
         /// The Postmates customer ID.
         /// </summary>
         [JsonProperty(PropertyName = "CustomerId", Required = Required.Always)]
+        [YamlMember(Alias = "customerId", ApplyNamingConventions = false)]
         public string CustomerId { get; set; }
 
         /// <summary>
         /// The REST API key.
         /// </summary>
         [JsonProperty(PropertyName = "ApiKey", Required = Required.Always)]
+        [YamlMember(Alias = "apiKey", ApplyNamingConventions = false)]
         public string ApiKey { get; set; }
     }
 }
