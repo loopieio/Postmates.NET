@@ -17,8 +17,15 @@ namespace Postmates.API
         /// <summary>
         /// Constructor.
         /// </summary>
+        public PostmatesAccount()
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         /// <param name="customerId"></param>
-        /// <param name="secret"></param>
+        /// <param name="apiKey"></param>
         public PostmatesAccount(string customerId, string apiKey)
         {
             CustomerId = customerId;
