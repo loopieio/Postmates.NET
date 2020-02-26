@@ -16,16 +16,28 @@ namespace Postmates.Model
     public enum PostmatesDeliveryStatuses
     {
         /// <summary>
+        /// Pending
+        /// </summary>
+        [EnumMember(Value = "pending")]
+        Pending,
+
+        /// <summary>
         /// Pickup
         /// </summary>
         [EnumMember(Value = "pickup")]
         Pickup,
 
         /// <summary>
-        /// Pending
+        /// Pickup Complete
         /// </summary>
-        [EnumMember(Value = "pending")]
-        Pending,
+        [EnumMember(Value = "pickup_complete")]
+        PickupComplete,
+
+        /// <summary>
+        /// Dropoff
+        /// </summary>
+        [EnumMember(Value = "dropoff")]
+        Dropoff,
 
         /// <summary>
         /// Delivered
@@ -46,18 +58,9 @@ namespace Postmates.Model
         Returned,
 
         /// <summary>
-        /// Dropoff
+        /// Ongoing
         /// </summary>
-        [EnumMember(Value = "dropoff")]
-        Dropoff,
-
-        /// <summary>
-        /// Pickup Complete
-        /// </summary>
-        [EnumMember(Value = "pickup_complete")]
-        PickupComplete
-
-
-            
+        [EnumMember(Value = "ongoing")]
+        Ongoing
     }
 }
