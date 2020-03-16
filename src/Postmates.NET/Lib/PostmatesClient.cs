@@ -335,7 +335,7 @@ namespace Postmates.API
             jsonObject.pickup_ready_dt = args.PickupReady;
             jsonObject.pickup_deadline_dt = args.PickupDeadline;
             jsonObject.dropoff_ready_dt = args.DropoffReady;
-            jsonObject.dropoff_deadline_dt = args.DropofffDeadline;
+            jsonObject.dropoff_deadline_dt = args.DropoffDeadline;
 
             var result = await PostFormAsync<PostmatesDelivery>(FormatPath("deliveries"), jsonObject, cancellationToken);
             return result;

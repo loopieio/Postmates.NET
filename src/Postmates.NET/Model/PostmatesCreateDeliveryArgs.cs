@@ -212,7 +212,7 @@ namespace Postmates.Model
         [JsonProperty(PropertyName = "dropoff_deadline_dt", Required = Required.Default)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
-        public DateTime? DropofffDeadline { get; set; }
+        public DateTime? DropoffDeadline { get; set; }
 
         /// <summary>
         /// Validates the devlivery create arguments are ready to be sent to postmates

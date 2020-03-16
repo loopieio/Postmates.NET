@@ -207,7 +207,7 @@ namespace Test.Postmates
                 PickupReady = DateTime.UtcNow.AddMinutes(10),
                 PickupDeadline = DateTime.UtcNow.AddMinutes(25),
                 DropoffReady = DateTime.UtcNow.AddMinutes(20),
-                DropofffDeadline = DateTime.UtcNow.AddMinutes(60)
+                DropoffDeadline = DateTime.UtcNow.AddMinutes(60)
             };
 
             var ongoingDelivery = await PostmatesClient.CreateDeliveryAsync(deliveryCreateArgs);
@@ -279,7 +279,7 @@ namespace Test.Postmates
                 PickupReady = DateTime.UtcNow.AddMinutes(10),
                 PickupDeadline = DateTime.UtcNow.AddMinutes(25),
                 DropoffReady = DateTime.UtcNow.AddMinutes(20),
-                DropofffDeadline = DateTime.UtcNow.AddMinutes(60)
+                DropoffDeadline = DateTime.UtcNow.AddMinutes(60)
             };
 
             var deliveryToCancel = await PostmatesClient.CreateDeliveryAsync(deliveryCreateArgs);

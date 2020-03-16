@@ -13,9 +13,9 @@
     <Authors>Marcus Bowyer</Authors>
     <Company>Loopie.io</Company>
     <Product>Postmates.NET</Product>
-    <Version>1.0.13</Version>
-    <AssemblyVersion>1.0.13</AssemblyVersion>
-    <FileVersion>1.0.13</FileVersion>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <FileVersion>1.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
