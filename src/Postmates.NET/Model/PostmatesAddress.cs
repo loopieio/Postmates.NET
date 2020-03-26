@@ -42,7 +42,8 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "street_address_2", Required = Required.Default)]
+        [JsonProperty(PropertyName = "street_address_2", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string StreetAddress2 { get; set; }
 
         /// <summary>

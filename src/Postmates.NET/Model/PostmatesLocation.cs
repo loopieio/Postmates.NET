@@ -36,37 +36,43 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "name", Required = Required.Default)]
+        [JsonProperty(PropertyName = "name", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "phone_number", Required = Required.Default)]
+        [JsonProperty(PropertyName = "phone_number", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "address", Required = Required.Default)]
+        [JsonProperty(PropertyName = "address", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Address { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "detailed_address", Required = Required.Default)]
+        [JsonProperty(PropertyName = "detailed_address", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public PostmatesAddress DetailedAddress { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "notes", Required = Required.Default)]
+        [JsonProperty(PropertyName = "notes", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Notes { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "location", Required = Required.Default)]
+        [JsonProperty(PropertyName = "location", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public PostmatesCoordinates Location { get; set; }
 
     }

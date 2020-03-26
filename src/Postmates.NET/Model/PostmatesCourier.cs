@@ -36,37 +36,43 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "name", Required = Required.Default)]
+        [JsonProperty(PropertyName = "name", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Name { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "rating", Required = Required.Default)]
+        [JsonProperty(PropertyName = "rating", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Rating { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "vehicle_type", Required = Required.Default)]
+        [JsonProperty(PropertyName = "vehicle_type", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string VehicleType { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "phone_number", Required = Required.Default)]
+        [JsonProperty(PropertyName = "phone_number", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "location", Required = Required.Default)]
+        [JsonProperty(PropertyName = "location", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public PostmatesLocation Location { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "img_href", Required = Required.Default)]
+        [JsonProperty(PropertyName = "img_href", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string ImgHref { get; set; }
 
     }

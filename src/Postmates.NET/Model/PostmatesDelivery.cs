@@ -75,49 +75,56 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_eta", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_eta", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
+        [DefaultValue(null)]
         public DateTime? PickupEta { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_eta", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_eta", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
+        [DefaultValue(null)]
         public DateTime? DropoffEta { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_ready", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_ready", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
+        [DefaultValue(null)]
         public DateTime? PickupReady { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_deadline", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_deadline", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
+        [DefaultValue(null)]
         public DateTime? PickupDeadline { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_ready", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_ready", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
+        [DefaultValue(null)]
         public DateTime? DropoffReady { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_deadline", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_deadline", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
+        [DefaultValue(null)]
         public DateTime? DropoffDeadline { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "quote_id", Required = Required.Default)]
+        [JsonProperty(PropertyName = "quote_id", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string QuoteId { get; set; }
 
         /// <summary>
@@ -135,19 +142,22 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "manifest", Required = Required.Default)]
+        [JsonProperty(PropertyName = "manifest", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public PostmatesManifest Manifest { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "manifest_items", Required = Required.Default)]
+        [JsonProperty(PropertyName = "manifest_items", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public List<PostmatesManifestItem> ManifestItems { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_identifier", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_identifier", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string DropoffIdentifier { get; set; }
 
         /// <summary>
@@ -165,19 +175,22 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "courier", Required = Required.Default)]
+        [JsonProperty(PropertyName = "courier", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public PostmatesCourier Courier { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "courier_imminent", Required = Required.Default)]
+        [JsonProperty(PropertyName = "courier_imminent", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public bool CourierImminent { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "related_deliveries", Required = Required.Default)]
+        [JsonProperty(PropertyName = "related_deliveries", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public List<PostmatesRelatedDelivery> RelatedDeliveries { get; set; }
 
         /// <summary>
@@ -189,25 +202,29 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "undeliverable_action", Required = Required.Default)]
+        [JsonProperty(PropertyName = "undeliverable_action", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string UndeliverableAction { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "undeliverable_reason", Required = Required.Default)]
+        [JsonProperty(PropertyName = "undeliverable_reason", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string UndeliverableReason { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "live_mode", Required = Required.Default)]
+        [JsonProperty(PropertyName = "live_mode", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public bool LiveMode { get; set; }
 
         /// <summary>
         /// The tip amount for the delivery.
         /// </summary>
-        [JsonProperty(PropertyName = "tip", Required = Required.Default)]
+        [JsonProperty(PropertyName = "tip", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public int? Tip { get; set; }
 
     }

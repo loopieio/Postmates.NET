@@ -40,7 +40,8 @@ namespace Postmates.Model
         /// The ID of a previously generated delivery quote. Optional, but recommended. 
         /// Example: "del_KSsT9zJdfV3P9k"
         /// </summary>
-        [JsonProperty(PropertyName = "quote_id", Required = Required.Default)]
+        [JsonProperty(PropertyName = "quote_id", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string QuoteId { get; set; }
 
         /// <summary>
@@ -53,7 +54,8 @@ namespace Postmates.Model
         /// <summary>
         /// Optional reference that identifies the manifest. Example: "Order #690"
         /// </summary>
-        [JsonProperty(PropertyName = "manifest_reference", Required = Required.Default)]
+        [JsonProperty(PropertyName = "manifest_reference", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string ManifestReference { get; set; }
 
         /// <summary>
@@ -64,7 +66,8 @@ namespace Postmates.Model
         ///         {"name": "Milk Tea", "quantity": 1, "size": "small"}
         ///     ]
         /// </summary>
-        [JsonProperty(PropertyName = "manifest_items", Required = Required.Default)]
+        [JsonProperty(PropertyName = "manifest_items", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public List<PostmatesManifestItem> ManifestItems { get; set; }
 
         /// <summary>
@@ -85,7 +88,8 @@ namespace Postmates.Model
         /// instead of the geocoded coordinate as long as they are less than 
         /// 1km apart as a crow flies. Example: "37.778307"
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_latitude", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_latitude", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public double? PickupLatitude { get; set; }
 
         /// <summary>
@@ -93,7 +97,8 @@ namespace Postmates.Model
         /// instead of the geocoded coordinate as long as they are less than 
         /// 1km apart as a crow flies. Example: "-122.413524"
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_longitude", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_longitude", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public double? PickupLongitude { get; set; }
 
         /// <summary>
@@ -105,14 +110,16 @@ namespace Postmates.Model
         /// <summary>
         /// Optional business name of the pickup location. Example: "Feline Enterprises, Inc."
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_business_name", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_business_name", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string PickupBusinessName { get; set; }
 
         /// <summary>
         /// Additional instructions for the courier at the pickup location. 
         /// Example: "Ring the doorbell twice, and only deliver the package if a human answers."
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_notes", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_notes", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string PickupNotes { get; set; }
 
         /// <summary>
@@ -133,7 +140,8 @@ namespace Postmates.Model
         /// instead of the geocoded coordinate as long as they are less than 1km 
         /// apart. Example: "37.778307"
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_latitude", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_latitude", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public double? DropoffLatitude { get; set; }
 
         /// <summary>
@@ -141,7 +149,8 @@ namespace Postmates.Model
         /// instead of the geocoded coordinate as long as they are less than 1km 
         /// apart. Example: "-122.413524"
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_longitude", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_longitude", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public double? DropoffLongitude { get; set; }
 
         /// <summary>
@@ -153,27 +162,29 @@ namespace Postmates.Model
         /// <summary>
         /// Optional business name of the dropoff location. Example: "Alice's Cat Cafe"
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_business_name", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_business_name", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string DropoffBusinessName { get; set; }
 
         /// <summary>
         /// Additional instructions for the courier at the dropoff location. 
         /// Example: "Tell the security guard that you're here to see Alice."
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_notes", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_notes", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string DropoffNotes { get; set; }
 
         /// <summary>
         /// Optional flag to indicate this delivery requires ID verification
         /// </summary>
-        [JsonProperty(PropertyName = "requires_id", Required = Required.Default)]
+        [JsonProperty(PropertyName = "requires_id", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [DefaultValue(false)]
         public bool RequiresId { get; set; }
 
         /// <summary>
         /// Optional flag to indicate this delivery requires signature capture at dropoff
         /// </summary>
-        [JsonProperty(PropertyName = "requires_dropoff_signature", Required = Required.Default)]
+        [JsonProperty(PropertyName = "requires_dropoff_signature", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [DefaultValue(false)]
         public bool RequiresDropoffSignature { get; set; }
 
@@ -182,7 +193,7 @@ namespace Postmates.Model
         /// Example: 2028-03-24T18:00:00.00Z. Omitting this field will result in a 
         /// default pickup_ready_dt of now
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_ready_dt", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_ready_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupReady { get; set; }
@@ -191,7 +202,7 @@ namespace Postmates.Model
         /// Optional ISO8601 datetime to specify by when a delivery must be picked up. 
         /// Example: 2028-03-24T19:00:00.00Z
         /// </summary>
-        [JsonProperty(PropertyName = "pickup_deadline_dt", Required = Required.Default)]
+        [JsonProperty(PropertyName = "pickup_deadline_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupDeadline { get; set; }
@@ -200,7 +211,7 @@ namespace Postmates.Model
         /// Optional ISO8601 datetime to specify when a delivery is ready to be dropped off. 
         /// Example: 2028-03-24T18:30:00.00Z
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_ready_dt", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_ready_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffReady { get; set; }
@@ -209,7 +220,7 @@ namespace Postmates.Model
         /// Optional ISO8601 datetime to specify by when a delivery must be dropped off. 
         /// Example: 2028-03-24T19:30:00.00Z
         /// </summary>
-        [JsonProperty(PropertyName = "dropoff_deadline_dt", Required = Required.Default)]
+        [JsonProperty(PropertyName = "dropoff_deadline_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffDeadline { get; set; }

@@ -36,13 +36,15 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "reference", Required = Required.Default)]
+        [JsonProperty(PropertyName = "reference", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Reference { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "description", Required = Required.Default)]
+        [JsonProperty(PropertyName = "description", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        [DefaultValue(null)]
         public string Description { get; set; }
 
     }
