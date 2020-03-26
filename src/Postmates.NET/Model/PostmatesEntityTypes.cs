@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // FILE:	    PostmatesEntityTypes.cs
 // CONTRIBUTOR: Marcus Bowyer
-// COPYRIGHT:	Copyright (c) 2017-2018 by Tarukino, LLC.  All rights reserved.
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using System;
 using Postmates.Model;

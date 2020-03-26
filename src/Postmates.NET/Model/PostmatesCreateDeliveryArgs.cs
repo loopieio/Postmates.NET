@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // FILE:	    PostmatesCreateDeliveryArgs.cs
 // CONTRIBUTOR: Marcus Bowyer
-// COPYRIGHT:	Copyright (c) 2019 by Loopie, LLC.  All rights reserved.
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using System;
 using System.ComponentModel;
@@ -194,7 +194,6 @@ namespace Postmates.Model
         /// default pickup_ready_dt of now
         /// </summary>
         [JsonProperty(PropertyName = "pickup_ready_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupReady { get; set; }
 
@@ -203,7 +202,6 @@ namespace Postmates.Model
         /// Example: 2028-03-24T19:00:00.00Z
         /// </summary>
         [JsonProperty(PropertyName = "pickup_deadline_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupDeadline { get; set; }
 
@@ -212,7 +210,6 @@ namespace Postmates.Model
         /// Example: 2028-03-24T18:30:00.00Z
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_ready_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffReady { get; set; }
 
@@ -221,7 +218,6 @@ namespace Postmates.Model
         /// Example: 2028-03-24T19:30:00.00Z
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_deadline_dt", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffDeadline { get; set; }
 

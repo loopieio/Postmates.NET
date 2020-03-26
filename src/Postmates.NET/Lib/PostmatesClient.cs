@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // FILE:	    PostmatesClient.cs
 // CONTRIBUTOR: Marcus Bowyer
-// COPYRIGHT:	Copyright (c) 2017-2018 by Loopie, LLC.  All rights reserved.
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using GeoJSON.Net.Feature;
 using Neon.Collections;
@@ -64,12 +64,6 @@ namespace Postmates.API
             };
 
             _jsonClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
-
-            _jsonSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                DateFormatString = "yyy-MM-ddTHH:mm:ss.ffZ"
-            };
 
             // Submit a request to verify that the token is valid.
             VerifyTokenAsync().Wait();

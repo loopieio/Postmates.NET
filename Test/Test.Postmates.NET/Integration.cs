@@ -1,12 +1,20 @@
-using Postmates.API;
-using Postmates.Model;
-using Postmates.Xunit;
+//-----------------------------------------------------------------------------
+// FILE:	    Integration.cs
+// CONTRIBUTOR: Marcus Bowyer
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Xunit;
+
 using Microsoft.Extensions.Configuration;
+
+using Postmates.API;
+using Postmates.Model;
+using Postmates.Xunit;
+
+using Xunit;
 
 namespace Test.Postmates
 {

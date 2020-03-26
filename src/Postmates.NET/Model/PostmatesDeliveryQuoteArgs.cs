@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // FILE:	    PostmatesDeliveryQuoteArgs.cs
 // CONTRIBUTOR: Marcus Bowyer
-// COPYRIGHT:	Copyright (c) 2019 by Loopie, LLC.  All rights reserved.
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using Newtonsoft.Json;
 using System;

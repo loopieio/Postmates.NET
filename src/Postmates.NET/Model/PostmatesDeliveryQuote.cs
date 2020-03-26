@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // FILE:	    PostmatesDeliveryQuote.cs
 // CONTRIBUTOR: Marcus Bowyer
-// COPYRIGHT:	Copyright (c) 2019 by Loopie, LLC.  All rights reserved.
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using System;
 using System.ComponentModel;
@@ -74,14 +74,12 @@ namespace Postmates.Model
         /// Date/Time the quote was created.
         /// </summary>
         [JsonProperty(PropertyName = "created", Required = Required.Always)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         public DateTime Created { get; set; }
 
         /// <summary>
         /// Date/Time after which the quote will no longer be accepted.
         /// </summary>
         [JsonProperty(PropertyName = "expires", Required = Required.Always)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         public DateTime Expires { get; set; }
 
         /// <summary>
@@ -100,7 +98,6 @@ namespace Postmates.Model
         /// Estimated drop-off time. This value may increase to several hours if the postmates platform is in high demand.
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_eta", Required = Required.Always)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         public DateTime DropoffEta { get; set; }
 
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------------
 // FILE:	    PostmatesDelivery.cs
 // CONTRIBUTOR: Marcus Bowyer
-// COPYRIGHT:	Copyright (c) 2019 by Loopie, LLC.  All rights reserved.
+// COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using System;
 using System.ComponentModel;
@@ -50,14 +50,12 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "created", Required = Required.Always)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         public DateTime Created { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "updated", Required = Required.Always)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         public DateTime Updated { get; set; }
 
         /// <summary>
@@ -76,7 +74,6 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "pickup_eta", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupEta { get; set; }
 
@@ -84,7 +81,6 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_eta", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffEta { get; set; }
 
@@ -92,7 +88,6 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "pickup_ready", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupReady { get; set; }
 
@@ -100,7 +95,6 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "pickup_deadline", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? PickupDeadline { get; set; }
 
@@ -108,7 +102,6 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_ready", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffReady { get; set; }
 
@@ -116,7 +109,6 @@ namespace Postmates.Model
         /// 
         /// </summary>
         [JsonProperty(PropertyName = "dropoff_deadline", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
-        [JsonConverter(typeof(PostmatesDateTimeConverter))]
         [DefaultValue(null)]
         public DateTime? DropoffDeadline { get; set; }
 
