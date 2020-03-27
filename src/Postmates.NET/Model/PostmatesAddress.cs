@@ -55,19 +55,19 @@ namespace Postmates.Model
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "state", Required = Required.Always)]
+        [JsonProperty(PropertyName = "state", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public UsStates State { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "zip_code", Required = Required.Always)]
+        [JsonProperty(PropertyName = "zip_code", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string ZipCode { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty(PropertyName = "country", Required = Required.Always)]
+        [JsonProperty(PropertyName = "country", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public Countries Country { get; set; }
 
         /// <summary>
