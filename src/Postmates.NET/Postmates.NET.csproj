@@ -16,7 +16,6 @@
     <Version>1.2.2</Version>
     <AssemblyVersion>1.2.2</AssemblyVersion>
     <FileVersion>1.2.2</FileVersion>
-    <UserSecretsId>d3047712-7ccb-46ce-9f59-dd6e3f01f94a</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="GeoJSON.Net" Version="1.2.15" />
