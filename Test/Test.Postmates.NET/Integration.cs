@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
 
-using Postmates.API;
-using Postmates.Model;
+using Postmates;
 using Postmates.Xunit;
 
 using Xunit;

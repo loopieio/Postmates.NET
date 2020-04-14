@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using Postmates.Model;
+using Postmates;
 
-namespace Postmates.Model
+namespace Postmates
 {
     public class ForbiddenException : PostmatesExceptionBase
     {

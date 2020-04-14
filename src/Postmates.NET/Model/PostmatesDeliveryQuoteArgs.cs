@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Postmates.Model
+namespace Postmates
 {
     /// <summary>
     /// Arguments passed to the get delivery quote endpoint.

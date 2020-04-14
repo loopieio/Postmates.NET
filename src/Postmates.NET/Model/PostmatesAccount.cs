@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 using YamlDotNet.Serialization;
 
-namespace Postmates.API
+namespace Postmates
 {
     /// <summary>
     /// Specifies the Postmates account infomation required to aces the REST API

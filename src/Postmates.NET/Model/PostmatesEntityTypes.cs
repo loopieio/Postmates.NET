@@ -4,10 +4,9 @@
 // COPYRIGHT:	Copyright (c) 2018-2020 by Loopie, Inc.  All rights reserved.
 
 using System;
-using Postmates.Model;
-using Postmates.API;
+using Postmates;
 
-namespace Postmates.Model
+namespace Postmates
 {
     /// <summary>
     /// Enumerates the Couchbase document type strings used for Postmates related

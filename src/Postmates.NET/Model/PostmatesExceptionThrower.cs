@@ -9,9 +9,9 @@ using System.Text;
 
 using Neon.Net;
 
-using Postmates.Model;
+using Postmates;
 
-namespace Postmates.Model
+namespace Postmates
 {
     public static class PostmatesExceptionThrower
     {

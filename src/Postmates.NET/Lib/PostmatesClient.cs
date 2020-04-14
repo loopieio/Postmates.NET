@@ -9,7 +9,7 @@ using Neon.Common;
 using Neon.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Postmates.Model;
+using Postmates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Postmates.API
+namespace Postmates
 {
     /// <summary>
     /// The Postmates Client.

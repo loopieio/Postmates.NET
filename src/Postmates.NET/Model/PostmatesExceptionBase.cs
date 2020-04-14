@@ -9,9 +9,9 @@ using System.Text;
 
 using Newtonsoft.Json;
 
-using Postmates.Model;
+using Postmates;
 
-namespace Postmates.Model
+namespace Postmates
 {
     public class PostmatesExceptionBase : Exception
     {
