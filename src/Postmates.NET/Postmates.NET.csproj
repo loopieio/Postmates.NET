@@ -1,5 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
@@ -16,8 +16,8 @@
     <Version>1.2.2</Version>
     <AssemblyVersion>1.2.2</AssemblyVersion>
     <FileVersion>1.2.2</FileVersion>
+    <UserSecretsId>d3047712-7ccb-46ce-9f59-dd6e3f01f94a</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="GeoJSON.Net" Version="1.2.15" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -25,5 +25,4 @@
     <PackageReference Include="Neon.Common" Version="1.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
-
 </Project>
