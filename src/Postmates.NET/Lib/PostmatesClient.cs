@@ -9,7 +9,7 @@ using Neon.Common;
 using Neon.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Postmates.Model;
+using Postmates;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +18,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Postmates.API
+namespace Postmates
 {
     /// <summary>
     /// The Postmates Client.
@@ -161,7 +161,17 @@ namespace Postmates.API
 
             var payload = new JsonClientPayload("application/x-www-form-urlencoded", payloadString);
 
-            return await _jsonClient.PostAsync<T>(url, payload);
+            var response = await _jsonClient.PostUnsafeAsync(url, payload);
+
+            if (response.IsSuccess)
+            {
+                return response.As<T>();
+            }
+            else
+            {
+                var args = response.As<PostmatesExceptionArgs>();
+                throw PostmatesExceptionThrower.GetException(args);
+            }
         }
 
         /// <summary>
@@ -254,6 +264,7 @@ namespace Postmates.API
             var result = await PostFormAsync<PostmatesDeliveryQuote>(FormatPath("delivery_quotes"), deliveryQuoteArguments, cancellationToken: cancellationToken);
 
             return result;
+
         }
 
         /// <summary>
@@ -267,7 +278,16 @@ namespace Postmates.API
         /// <returns></returns>
         public async Task<IEnumerable<FeatureCollection>> GetDeliveryZonesAsync(CancellationToken cancellationToken = default)
         {
-            return await _jsonClient.GetAsync<IEnumerable<FeatureCollection>>("/v1/delivery_zones", cancellationToken: cancellationToken);
+            var response = await _jsonClient.GetUnsafeAsync("/v1/delivery_zones", cancellationToken: cancellationToken);
+            if (response.IsSuccess)
+            {
+                return response.As<IEnumerable<FeatureCollection>>();
+            }
+            else
+            {
+                var args = response.As<PostmatesExceptionArgs>();
+                throw PostmatesExceptionThrower.GetException(args);
+            }
         }
 
         /// <summary>
@@ -365,7 +385,16 @@ namespace Postmates.API
         /// </summary>
         public async Task<PostmatesDelivery> GetDeliveryAsync(string deliveryId, CancellationToken cancellationToken = default)
         {
-            return await _jsonClient.GetAsync<PostmatesDelivery>(FormatPath($"deliveries/{deliveryId}"));
+            var response = await _jsonClient.GetUnsafeAsync(FormatPath($"deliveries/{deliveryId}"));
+            if (response.IsSuccess)
+            {
+                return response.As<PostmatesDelivery>();
+            }
+            else
+            {
+                var args = response.As<PostmatesExceptionArgs>();
+                throw PostmatesExceptionThrower.GetException(args);
+            }
         }
 
         /// <summary>
@@ -374,7 +403,16 @@ namespace Postmates.API
         /// </summary>
         public async Task<PostmatesDelivery> CancelDeliveryAsync(string deliveryId, CancellationToken cancellationToken = default)
         {
-            return await _jsonClient.PostAsync<PostmatesDelivery>(FormatPath($"deliveries/{deliveryId}/cancel"), null);
+            var response = await _jsonClient.PostUnsafeAsync(FormatPath($"deliveries/{deliveryId}/cancel"), null);
+            if (response.IsSuccess)
+            {
+                return response.As<PostmatesDelivery>();
+            }
+            else
+            {
+                var args = response.As<PostmatesExceptionArgs>();
+                throw PostmatesExceptionThrower.GetException(args);
+            }
         }
 
         /// <summary>

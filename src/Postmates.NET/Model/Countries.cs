@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 using System.Runtime.Serialization;
 
-namespace Postmates.Model
+namespace Postmates
 {
     /// <summary>
     /// Enumerates country codes.
