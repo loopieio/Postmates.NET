@@ -22,7 +22,8 @@ namespace Postmates
         public PostmatesExceptionBase(PostmatesExceptionArgs postmatesExceptionArgs)
         {
             PostmatesErrorCode = postmatesExceptionArgs.Code;
-            PostmatesMessage = postmatesExceptionArgs.Message;
+            PostmatesMessage   = postmatesExceptionArgs.Message;
+            PostmatesParams    = postmatesExceptionArgs.Params;
         }
 
         /// <summary>
@@ -36,5 +37,11 @@ namespace Postmates
         /// </summary>
         [JsonProperty(PropertyName = "postmates_message", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
         public string PostmatesMessage { get; set; }
+
+        /// <summary>
+        /// The error params from Postmates.
+        /// </summary>
+        [JsonProperty(PropertyName = "postmates_params", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public Dictionary<string, string> PostmatesParams { get; set; }
     }
 }

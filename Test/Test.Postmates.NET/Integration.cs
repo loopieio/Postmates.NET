@@ -416,5 +416,64 @@ namespace Test.Postmates
                 Assert.IsType<AddressUndeliverableException>(e);
             }
         }
+
+        /// <summary>
+        /// Request a delivery with invalid params, specifically an invalid dropoff phone number.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Sample)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Integration)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
+        public async Task InvalidParamsAsync()
+        {
+            var manifestItems = new List<PostmatesManifestItem>();
+            manifestItems.Add(new PostmatesManifestItem()
+            {
+                Name = "Loopie Laundry bag",
+                Quantity = 1,
+                Size = PostmatesItemSizes.Medium
+            });
+
+            var delivery = new PostmatesCreateDeliveryArgs()
+            {
+                Manifest = "Laundry in a Loopie bag.",
+                ManifestItems = manifestItems,
+                PickupName = "Marcus",
+                PickupAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "229 1st AVE N",
+                    City = "Seattle",
+                    State = UsStates.WA,
+                    Country = Countries.US,
+                    ZipCode = "98109"
+                },
+                PickupPhoneNumber = "3155140118",
+                PickupNotes = "Ring doorbell",
+                DropoffName = "Loopie HQ",
+                DropoffAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "3958 6th AVE NW",
+                    StreetAddress2 = "",
+                    City = "Seattle",
+                    State = UsStates.WA,
+                    Country = Countries.US,
+                    ZipCode = "98107"
+                },
+                DropoffPhoneNumber = "31asdfg118",
+                DropoffNotes = "Ring doorbell/Call"
+            };
+
+            try
+            {
+                var result = await PostmatesClient.CreateDeliveryAsync(delivery);
+            }
+            catch (Exception e)
+            {
+                Assert.IsType<InvalidParamsException>(e);
+                var containsParam = ((InvalidParamsException)e).PostmatesParams.TryGetValue("dropoff_phone_number", out string paramMessage);
+                Assert.True(containsParam);
+            }
+        }
     }
 }

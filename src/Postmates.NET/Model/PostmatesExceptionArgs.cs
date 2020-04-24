@@ -55,5 +55,11 @@ namespace Postmates
          * "dropoff_name": "Dropoff name is required.",
          * "dropoff_phone_number": "Dropoff phone number must be valid phone number."
          */
+
+        /// <summary>
+        /// The error params from Postmates.
+        /// </summary>
+        [JsonProperty(PropertyName = "params", Required = Required.Default, DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate)]
+        public Dictionary<string, string> Params { get; set; }
     }
 }
