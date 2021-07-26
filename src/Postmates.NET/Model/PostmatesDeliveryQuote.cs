@@ -9,14 +9,13 @@ using System.Diagnostics.Contracts;
 
 using Neon.Common;
 
-using Postmates.Model;
-using Postmates.API;
+using Postmates;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-namespace Postmates.Model
+namespace Postmates
 {
     /// <summary>
     /// Represens a delivery quote from Postmates

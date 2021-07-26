@@ -8,7 +8,7 @@ using Newtonsoft.Json.Converters;
 
 using System.Runtime.Serialization;
 
-namespace Postmates.Model
+namespace Postmates
 {
     /// <summary>
     /// Enumerates the US States, Commonwealth, and Territories.

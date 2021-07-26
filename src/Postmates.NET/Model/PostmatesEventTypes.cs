@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Runtime.Serialization;
 
-namespace Postmates.Model
+namespace Postmates
 {
     /// <summary>
     /// Enumerates the Postmates Webhook event types.

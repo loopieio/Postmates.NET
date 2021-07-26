@@ -6,12 +6,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
 
-using Postmates.API;
-using Postmates.Model;
+using Postmates;
 using Postmates.Xunit;
 
 using Xunit;
@@ -329,5 +329,151 @@ namespace Test.Postmates
             Assert.True(result.Id == deliveryToTip.Id);
         }
 
+        /// <summary>
+        /// Delivery quote for unknown location.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Sample)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Integration)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
+        public async Task UnknownLocationAsync()
+        {
+            var deliveryQuoteArgs = new PostmatesDeliveryQuoteArgs()
+            {
+                PickupAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "34 Antarctica Avenue",
+                    StreetAddress2 = "",
+                    City = "Antarctica",
+                    State = UsStates.WA,
+                    ZipCode = "90000"
+                },
+                PickupPhoneNumber = "3155140118",
+                DropoffAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "00 Not a real Ave",
+                    StreetAddress2 = "",
+                    City = "Fake",
+                    State = UsStates.WA,
+                    ZipCode = "00000"
+                },
+                DropoffPhoneNumber = "+1 (315) 514-0118"
+            };
+            try
+            {
+                var deliveryQuote = await PostmatesClient.GetDeliveryQuoteAsync(deliveryQuoteArgs);
+            }
+            catch(Exception e)
+            {
+                Assert.IsType<UnknownLocationException>(e);
+            }
+        }
+
+
+        /// <summary>
+        /// Request a delivery for an address that is undeliverable.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Sample)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Integration)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
+        public async Task AddressUndeliverableAsync()
+        {
+            var deliveryQuoteArgs = new PostmatesDeliveryQuoteArgs()
+            {
+                PickupAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "405 1st St NW, Towner, ND 58788",
+                    StreetAddress2 = "",
+                    City = "Towner",
+                    State = UsStates.ND,
+                    ZipCode = "58788"
+                },
+                PickupLatitude = 47.6698608,
+                PickupLongitude = -100.406688,
+                PickupPhoneNumber = "3155140118",
+                DropoffAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "3958 6th AVE NW",
+                    StreetAddress2 = "",
+                    City = "Seattle",
+                    State = UsStates.WA,
+                    ZipCode = "98107"
+                },
+                DropoffLatitude = 47.6554918,
+                DropoffLongitude = -122.3633574,
+                DropoffPhoneNumber = "+1 (315) 514-0118"
+            };
+
+            try
+            {
+                var deliveryQuote = await PostmatesClient.GetDeliveryQuoteAsync(deliveryQuoteArgs);
+            }
+            catch (Exception e)
+            {
+                Assert.IsType<AddressUndeliverableException>(e);
+            }
+        }
+
+        /// <summary>
+        /// Request a delivery with invalid params, specifically an invalid dropoff phone number.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Sample)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Integration)]
+        [Trait(TestCategory.CategoryTrait, TestCategory.Daily)]
+        public async Task InvalidParamsAsync()
+        {
+            var manifestItems = new List<PostmatesManifestItem>();
+            manifestItems.Add(new PostmatesManifestItem()
+            {
+                Name = "Loopie Laundry bag",
+                Quantity = 1,
+                Size = PostmatesItemSizes.Medium
+            });
+
+            var delivery = new PostmatesCreateDeliveryArgs()
+            {
+                Manifest = "Laundry in a Loopie bag.",
+                ManifestItems = manifestItems,
+                PickupName = "Marcus",
+                PickupAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "229 1st AVE N",
+                    City = "Seattle",
+                    State = UsStates.WA,
+                    Country = Countries.US,
+                    ZipCode = "98109"
+                },
+                PickupPhoneNumber = "3155140118",
+                PickupNotes = "Ring doorbell",
+                DropoffName = "Loopie HQ",
+                DropoffAddress = new PostmatesAddress()
+                {
+                    StreetAddress1 = "3958 6th AVE NW",
+                    StreetAddress2 = "",
+                    City = "Seattle",
+                    State = UsStates.WA,
+                    Country = Countries.US,
+                    ZipCode = "98107"
+                },
+                DropoffPhoneNumber = "31asdfg118",
+                DropoffNotes = "Ring doorbell/Call"
+            };
+
+            try
+            {
+                var result = await PostmatesClient.CreateDeliveryAsync(delivery);
+            }
+            catch (Exception e)
+            {
+                Assert.IsType<InvalidParamsException>(e);
+                var containsParam = ((InvalidParamsException)e).PostmatesParams.TryGetValue("dropoff_phone_number", out string paramMessage);
+                Assert.True(containsParam);
+            }
+        }
     }
 }
