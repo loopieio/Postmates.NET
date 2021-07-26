@@ -51,7 +51,7 @@ namespace Postmates.API
         /// </summary>
         /// <param name="account"></param>
         /// <param name="serviceUri"></param>
-        public PostmatesClient(PostmatesAccount account, string serviceUri = "https://api.postmates.com/")
+        public PostmatesClient(PostmatesAccount account, string serviceUri = "https://api.postmates.com/", bool verifyToken = false)
         {
             _customerId = account.CustomerId;
             _apiKey = account.ApiKey;
@@ -65,8 +65,11 @@ namespace Postmates.API
 
             _jsonClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
 
-            // Submit a request to verify that the token is valid.
-            VerifyTokenAsync().Wait();
+            if (verifyToken)
+            {
+                // Submit a request to verify that the token is valid.
+                VerifyTokenAsync().Wait();
+            }
         }
 
 
